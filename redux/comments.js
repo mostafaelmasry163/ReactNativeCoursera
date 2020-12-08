@@ -1,4 +1,4 @@
-import * ActionTypes from './ActionTypes';
+import * as ActionTypes from './ActionTypes';
 
 export const comments = (state = {
     errMess: null,
@@ -13,7 +13,7 @@ export const comments = (state = {
         case ActionTypes.COMMENTS_FAILED:
             return {...state, errMess: action.payload, comments: []};
             
-        default 
+        default:
         return state;
     }
 }

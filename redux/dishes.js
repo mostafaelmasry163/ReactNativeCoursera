@@ -1,4 +1,4 @@
-import * ActionTypes from './ActionTypes';
+import * as ActionTypes from './ActionTypes';
 
 export const dishes = (state = {
     isLoading: true,
@@ -16,7 +16,7 @@ export const dishes = (state = {
         case ActionTypes.DISHES_FAILED:
             return {...state, isLoading: false, errMess: action.payload, dishes: []};
             
-        default 
+        default: 
         return state;
     }
 }

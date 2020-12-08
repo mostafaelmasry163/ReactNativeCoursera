@@ -1,10 +1,10 @@
-import * ActionTypes from './ActionTypes';
+import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + 'comments')
-        .then( response => {
-            (response.ok) {
+        .then(response => {
+            if (response.ok) {
                 return response;
             }
             else {
@@ -37,7 +37,7 @@ export const fetchDishes = () => (dispatch) => {
 
     return fetch(baseUrl + 'dishes')
         .then( response => {
-            (response.ok) {
+            if (response.ok) {
                 return response;
             }
             else {
@@ -74,7 +74,7 @@ export const fetchLeaders = () => (dispatch) => {
 
     return fetch(baseUrl + 'leaders')
         .then( response => {
-            (response.ok) {
+            if (response.ok) {
                 return response;
             }
             else {
@@ -111,7 +111,7 @@ export const fetchPromos = () => (dispatch) => {
 
     return fetch(baseUrl + 'promotions')
         .then( response => {
-            (response.ok) {
+            if (response.ok) {
                 return response;
             }
             else {

@@ -1,4 +1,4 @@
-import * ActionTypes from './ActionTypes';
+import * as ActionTypes from './ActionTypes';
 
 export const leaders = (state = {
     isLoading: true,
@@ -16,7 +16,7 @@ export const leaders = (state = {
         case ActionTypes.LEADERS_FAILED:
             return {...state, isLoading: false, errMess: action.payload, leaders: []};
             
-        default 
+        default: 
         return state;
     }
 }
