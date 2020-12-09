@@ -3,6 +3,7 @@ import { Card, ListItem } from 'react-native-elements';
 import { ScrollView, View, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
 const mapStateToProps = state => {
     return {
@@ -20,6 +21,23 @@ class Aboutus extends Component {
         const { navigate } = this.props.navigation;
 
       const renderLeader = ({item, index}) => {
+          if (this.props.leaders.isLoading) {
+              return(
+                  <ScrollView>
+                      <Loading />
+                  </ScrollView>
+              );
+          }
+          else if (this.props.leaders.errMess) {
+              return(
+                  <ScrollView>
+                      <Text>
+                          {this.props.leaders.errMess}
+                      </Text>
+                  </ScrollView>
+              );
+          }
+          else {
             return (
                 <ListItem
                     key={index}
@@ -29,6 +47,7 @@ class Aboutus extends Component {
                     leftAvatar={{ source: {uri: baseUrl + item.image}}}
                 />        
             );
+          }
          };
 
         return (
