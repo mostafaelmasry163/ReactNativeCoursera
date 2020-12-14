@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Switch, Button, Modal } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 
@@ -10,7 +11,8 @@ class Reservation extends Component {
         this.state = {
             guests: 1,
             smoking: false,
-            date: ''
+            date: '',
+            showModal:false
         }
     }
 
@@ -18,31 +20,39 @@ class Reservation extends Component {
         title: 'Reserv Table'
     }
 
+    toggleModal() {
+        this.setState({ showModal: !this.state.showModal })
+    }
+
     handelReservation() {
-        consle.log(JSON.stringify(this.state));
+        console.log(JSON.stringify(this.state));
+        this.toggleModal();
+    }
+
+    resetForm() {
         this.setState({
             guests: 1,
             smoking: false,
             date: ''
-        });
+        });       
     }
 
     render() {
         return (
             <ScrollView>
                 <View style={styles.formRow}>
-                <Text style={styles.formLabel}>Number of Guests</Text>
-                <Picker
-                    style={styles.formItem}
-                    selectedValue={this.state.guests}
-                    onValueChange={(itemValue, itemIndex) => this.setState({guests: itemValue})}>
-                    <Picker.Item label="1" value="1" />
-                    <Picker.Item label="2" value="2" />
-                    <Picker.Item label="3" value="3" />
-                    <Picker.Item label="4" value="4" />
-                    <Picker.Item label="5" value="5" />
-                    <Picker.Item label="6" value="6" />
-                </Picker>
+                    <Text style={styles.formLabel}>Number of Guests</Text>
+                    <Picker
+                        style={styles.formItem}
+                        selectedValue={this.state.guests}
+                        onValueChange={(itemValue, itemIndex) => this.setState({guests: itemValue})}>
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
                 </View>
                 <View style={styles.formRow}>
                     <Text style={styles.formLabel}>
@@ -87,10 +97,29 @@ class Reservation extends Component {
                     <Button 
                         title='Reserve'
                         color='#512DA8'
-                        onPress={() => this.handleReservation()}
+                        onPress={() => this.handelReservation()}
                         accessibilityLabel='Learn more about this purple button'
                     />
-                </View>               
+                </View>    
+                <Modal
+                    animationType={'slide'}
+                    transparent={false}
+                    visible={this.state.showModal}
+                    onDismiss={() => {this.toggleModal(); this.resetForm()}}
+                    onRequestClose={() => {this.toggleModal(); this.resetForm()}}
+                >
+                    <View style={styles.modal}>
+                        <Text style={styles.modalTitle}>Your Reservation</Text>
+                        <Text style={styles.modalText}>Number of Guests: {this.state.guests}</Text>
+                        <Text style={styles.modalText}>Inside/Outside Table:  {this.state.smoking ? 'Outside Table' : 'Inside Table'}</Text>
+                        <Text style={styles.modalText}>Date and Time: {this.state.date}</Text>
+                        <Button 
+                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                            color='#512DA8'
+                            title='close'
+                        />
+                    </View>
+                </Modal>         
             </ScrollView>
         );
     }
@@ -108,7 +137,24 @@ const styles = StyleSheet.create({
         flex: 2
     },
     formItem: {
-        flex: 1
+        flex: 1,
+        width: 70
+    },
+    modal: {
+        justifyContent: 'center',
+        margin: 20
+    },
+    modalTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        backgroundColor: '#512DA8',
+        textAlign: 'center',
+        color: 'white',
+        marginBottom:20
+    },
+    modalText: {
+        fontSize: 18,
+        margin: 10
     }
 });
 
