@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
 function RenderDish(props) {
     const dish = props.dish;
 
-    handleViewRef = ref => this.view =ref;
+    handleViewRef = ref => this.view = ref;
 
     const recognizeDrag = ({ moveX, moveY, dx, dy}) => {
         if (dx < -200 )
