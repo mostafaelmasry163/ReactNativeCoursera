@@ -31,14 +31,21 @@ function RenderDish(props) {
             return false; // swipe right
     };
 
+    const recognizeComm = ({ moveX, moveY, dx, dy}) => {
+        if (dx > 200 )
+            return true;   //swipe right 
+        else
+            return false; // swipe left
+    };
+
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: (e, getureState) => {
             return true;
         },
-        onPanResponderGrant: () => {
-            this.view.rubberBand(1000)
-                .then(endState => console.log(endState.finsished ? 'finished' : 'cancelled'))
-        },
+        // onPanResponderGrant: () => {
+        //     this.view.rubberBand(1000)
+        //         .then(endState => console.log(endState.finsished ? 'finished' : 'cancelled'))
+        // },
         onPanResponderEnd: (e, gestureState) => {
             if (recognizeDrag(gestureState))
                 Alert.alert(
@@ -55,7 +62,10 @@ function RenderDish(props) {
                         }
                     ],
                     {cancelable: false}
-                )
+                );
+            else if (recognizeComm(gestureState)) {
+                    props.handleComment();
+                }
 
             return true;
         }
